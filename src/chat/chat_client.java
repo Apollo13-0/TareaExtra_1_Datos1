@@ -13,7 +13,7 @@ public class chat_client {
         // This method set the tittle
         screenC.setTitle("Client");
         // This method set the background color
-        //screenC.setBackground(Color.gray);
+        screenC.getContentPane().setBackground(new Color(255,250,250));
         // This method stops the app
         screenC.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
