@@ -30,5 +30,7 @@ class Frames extends JFrame{
         //System.out.println(screen_dim);
         setSize(Fwidth, Fheight);
         setLocation(305, 190);
+        // Set the frame non resizable
+        setResizable(false);
     }
 }
