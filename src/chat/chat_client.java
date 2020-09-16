@@ -45,5 +45,6 @@ class Buttons extends JButton{
         // Set button size with variable width and height
         setSize(Bwidth, Bheight);
         setLocation(Bx, By);
+
     }
         }
