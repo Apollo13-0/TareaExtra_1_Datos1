@@ -16,6 +16,10 @@ public class chat_client {
         screenC.getContentPane().setBackground(new Color(255,250,250));
         // This method stops the app
         screenC.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Buttons buttonSend = new Buttons(50, 50, 0, 0);
+        //screenC.add(buttonSend);
+        buttonSend.setText("Send");
     }
 }
 
@@ -34,3 +38,12 @@ class Frames extends JFrame{
         setResizable(false);
     }
 }
+
+class Buttons extends JButton{
+
+    public Buttons(int Bwidth, int Bheight, int Bx, int By){
+        // Set button size with variable width and height
+        setSize(Bwidth, Bheight);
+        setLocation(Bx, By);
+    }
+        }
