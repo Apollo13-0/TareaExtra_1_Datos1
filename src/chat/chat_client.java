@@ -5,6 +5,11 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.*;
+
 
 public class chat_client {
 
@@ -71,8 +76,37 @@ class PanelClient extends JPanel{
 
         sendClient = new JButton("Enviar");
 
+        sendTxt sendEvent = new sendTxt();
+
+        sendClient.addActionListener(sendEvent);
+
         add(sendClient, BorderLayout.SOUTH);
 
+    }
+
+    private class sendTxt implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            //System.out.println(entryTxtClient.getText());
+            int port = 6000;
+
+            try {
+                Socket clientSocket = new Socket("127.0.0.1", port);
+
+                DataOutputStream clientOutD = new DataOutputStream(clientSocket.getOutputStream());
+
+                clientOutD.writeUTF(entryTxtClient.getText());
+
+                clientOutD.close();
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                System.out.println(ioException.getMessage());
+            }
+
+        }
     }
 
 }

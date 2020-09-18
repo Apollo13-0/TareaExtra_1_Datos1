@@ -20,6 +20,8 @@ public class chat_server {
 
 class ServerFrames extends JFrame{
 
+    private JTextArea textArea;
+
     public ServerFrames(){
 
         // Create variables for an easy change
@@ -35,11 +37,15 @@ class ServerFrames extends JFrame{
         setTitle("Servidor");
 
         // This method set the background color
-        getContentPane().setBackground(new Color(236,229,221));
+        //getContentPane().setBackground(new Color(236,229,221));
 
         // Create and add a panel which contains button and labels
         PanelServer containerServer= new PanelServer();
         add(containerServer, BorderLayout.SOUTH);
+
+        textArea = new JTextArea();
+        textArea.setBackground(new Color(236,229,221));
+        add(textArea, BorderLayout.CENTER);
 
         JPanel title = new JPanel();
         JLabel titleTxt = new JLabel("Servidor");
@@ -59,6 +65,7 @@ class PanelServer extends JPanel{
 
     private JTextField entryTxtServer;
     private JButton sendServer;
+
 
     public PanelServer() {
 
