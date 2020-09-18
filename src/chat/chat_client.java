@@ -1,5 +1,8 @@
+
 package chat;
- // comentar
+
+ // import modules for GUI
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,7 +21,7 @@ class Frames extends JFrame{
 
     public Frames(){
 
-        //
+        // Create variables for an easy change
         short Fwidth = 350;
         short Fheight = 700;
 
@@ -28,25 +31,29 @@ class Frames extends JFrame{
         // This method don't allow to change frame dimensions
         setResizable(false);
         // This method shows the frame
-        setTitle("Client");
+        setTitle("Cliente");
 
         // This method set the background color
         getContentPane().setBackground(new Color(236,229,221));
 
+        // Create and add a panel which contains button and labels
         PanelClient containerClient = new PanelClient();
         add(containerClient, BorderLayout.SOUTH);
 
         JPanel title = new JPanel();
-        JLabel titleTxt = new JLabel("Servidor");
+        JLabel titleTxt = new JLabel("Cliente");
         title.setBackground(new Color(7,94,84));
         titleTxt.setForeground(new Color(255,255,255));
         title.add(titleTxt);
         add(title, BorderLayout.NORTH);
 
+        // This method displays the frame
         setVisible(true);
 
     }
 }
+
+// This class creates the south panel which has a button and a textfield
 
 class PanelClient extends JPanel{
 
