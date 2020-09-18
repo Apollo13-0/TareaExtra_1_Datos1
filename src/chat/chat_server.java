@@ -5,6 +5,11 @@ package chat;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 
 public class chat_server {
 
@@ -18,7 +23,7 @@ public class chat_server {
     }
 }
 
-class ServerFrames extends JFrame{
+class ServerFrames extends JFrame implements Runnable{
 
     private JTextArea textArea;
 
@@ -55,6 +60,31 @@ class ServerFrames extends JFrame{
         add(title, BorderLayout.NORTH);
 
         setVisible(true);
+
+        Thread serverThread = new Thread(this);
+        serverThread.start();
+
+    }
+
+    @Override
+    public void run() {
+        try {
+            ServerSocket server = new ServerSocket(6000);
+
+            while (true) {
+                Socket socketS = server.accept();
+
+                DataInputStream serverInD = new DataInputStream(socketS.getInputStream());
+
+                String message = serverInD.readUTF();
+
+                textArea.append(message + "\n");
+
+                socketS.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
