@@ -37,24 +37,15 @@ class Frames extends JFrame{
         setResizable(false);
         // This method shows the frame
         setTitle("Cliente");
-
         // This method set the background color
-        getContentPane().setBackground(new Color(236,229,221));
+        //getContentPane().setBackground(new Color(236,229,221));
 
         // Create and add a panel which contains button and labels
         PanelClient containerClient = new PanelClient();
-        add(containerClient, BorderLayout.SOUTH);
+        add(containerClient);
 
-        JPanel title = new JPanel();
-        JLabel titleTxt = new JLabel("Cliente");
-        title.setBackground(new Color(7,94,84));
-        titleTxt.setForeground(new Color(255,255,255));
-        title.add(titleTxt);
-        add(title, BorderLayout.NORTH);
 
-        // This method displays the frame
         setVisible(true);
-
     }
 }
 
@@ -65,14 +56,32 @@ class PanelClient extends JPanel{
     private JTextField entryTxtClient;
     private JButton sendClient;
 
+    private JTextField nameEntry;
+    private JLabel clientLabel;
+    private JTextArea textArea;
+
     public PanelClient() {
+
+
+        clientLabel = new JLabel("Ingrese su nombre:");
+        clientLabel.setForeground(Color.white);
+
+        nameEntry = new JTextField(8);
+
+        add(clientLabel);
+        add(nameEntry);
+
+        textArea = new JTextArea(37,30);
+        textArea.setBackground(new Color(236,229,221));
+
+        add(textArea);
 
         // This method set the background color
         setBackground(new Color(18, 140, 128));
 
         entryTxtClient = new JTextField(20);
 
-        add(entryTxtClient, BorderLayout.CENTER);
+        add(entryTxtClient);
 
         sendClient = new JButton("Enviar");
 
@@ -80,7 +89,7 @@ class PanelClient extends JPanel{
 
         sendClient.addActionListener(sendEvent);
 
-        add(sendClient, BorderLayout.SOUTH);
+        add(sendClient);
 
     }
 
@@ -97,7 +106,7 @@ class PanelClient extends JPanel{
 
                 DataOutputStream clientOutD = new DataOutputStream(clientSocket.getOutputStream());
 
-                clientOutD.writeUTF(entryTxtClient.getText());
+                clientOutD.writeUTF(entryTxtClient.getText() + "  N-  " + nameEntry.getText());
 
                 clientOutD.close();
 
