@@ -27,6 +27,7 @@ class Frames extends JFrame implements Runnable{
 
     private Thread clientThread;
     private JTextArea textArea;
+    private JLabel portLabel;
 
     public Frames(){
 
@@ -44,14 +45,16 @@ class Frames extends JFrame implements Runnable{
         // This method set the background color
         //getContentPane().setBackground(new Color(236,229,221));
 
-        textArea = new JTextArea(37,30);
+        textArea = new JTextArea(36,30);
         textArea.setBackground(new Color(236,229,221));
 
-
+        portLabel = new JLabel();
+        portLabel.setForeground(new Color(220,248,198));
 
         // Create and add a panel which contains button and labels
         PanelClient containerClient = new PanelClient();
         containerClient.add(textArea);
+        containerClient.add(portLabel);
         add(containerClient);
 
 
@@ -69,7 +72,7 @@ class Frames extends JFrame implements Runnable{
         while (portAlive) {
             try {
                 ServerSocket server = new ServerSocket(port);
-                System.out.println(port);
+                portLabel.setText("Su puerto es: " + String.valueOf(port));
                 portAlive = false;
 
                 while (true) {
