@@ -110,7 +110,6 @@ class PanelClient extends JPanel{
 
     public PanelClient() {
 
-
         clientLabel = new JLabel("Ingrese su nombre:");
         clientLabel.setForeground(Color.white);
 
