@@ -1,4 +1,4 @@
-
+/*
 package chat;
 
 // import modules for GUI
@@ -9,8 +9,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-
+*/
+/*
 public class chat_server {
 
     public static void main (String[] args) {
@@ -124,4 +124,4 @@ class PanelServer extends JPanel{
     }
 
 }
-
+*/

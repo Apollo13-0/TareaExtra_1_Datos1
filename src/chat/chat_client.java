@@ -71,6 +71,7 @@ class Frames extends JFrame implements Runnable{
 
         while (portAlive) {
             try {
+
                 ServerSocket server = new ServerSocket(port);
                 portLabel.setText("Su puerto es: " + String.valueOf(port));
                 portAlive = false;
@@ -101,7 +102,6 @@ class PanelClient extends JPanel{
 
     private JTextField entryTxtClient;
     private JButton sendClient;
-
     private JTextField nameEntry;
     private JTextField portEntry;
     private JLabel clientLabel;
@@ -124,11 +124,6 @@ class PanelClient extends JPanel{
         add(nameEntry);
         add(portLabel);
         add(portEntry);
-
-        //textArea = new JTextArea(37,30);
-        //textArea.setBackground(new Color(236,229,221));
-
-        //add(textArea);
 
         // This method set the background color
         setBackground(new Color(18, 140, 128));
