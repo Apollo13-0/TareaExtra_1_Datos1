@@ -16,7 +16,6 @@ public class chat_server {
     public static void main (String[] args) {
 
         ServerFrames severFrame = new ServerFrames();
-
         //This method stops the app
         severFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -26,6 +25,10 @@ public class chat_server {
 class ServerFrames extends JFrame implements Runnable{
 
     private JTextArea textArea;
+    private JPanel title;
+    private JLabel titleTxt;
+    private PanelServer containerServer;
+    private Thread serverThread;
 
     public ServerFrames(){
 
@@ -45,15 +48,15 @@ class ServerFrames extends JFrame implements Runnable{
         //getContentPane().setBackground(new Color(236,229,221));
 
         // Create and add a panel which contains button and labels
-        PanelServer containerServer= new PanelServer();
+        containerServer = new PanelServer();
         add(containerServer, BorderLayout.SOUTH);
 
         textArea = new JTextArea();
         textArea.setBackground(new Color(236,229,221));
         add(textArea, BorderLayout.CENTER);
 
-        JPanel title = new JPanel();
-        JLabel titleTxt = new JLabel("Servidor");
+        title = new JPanel();
+        titleTxt = new JLabel("Servidor");
         title.setBackground(new Color(7,94,84));
         titleTxt.setForeground(new Color(255,255,255));
         title.add(titleTxt);
@@ -61,31 +64,38 @@ class ServerFrames extends JFrame implements Runnable{
 
         setVisible(true);
 
-        Thread serverThread = new Thread(this);
+        serverThread = new Thread(this);
         serverThread.start();
 
     }
 
     @Override
     public void run() {
-        try {
-            ServerSocket server = new ServerSocket(6000);
+        int port = 1024;
+        boolean portAlive = true;
 
-            while (true) {
-                Socket socketS = server.accept();
+        while (portAlive) {
+            try {
+                ServerSocket server = new ServerSocket(port);
+                System.out.println(port);
+                portAlive = false;
 
-                DataInputStream serverInD = new DataInputStream(socketS.getInputStream());
+                while (true) {
+                    Socket socketS = server.accept();
 
-                String message = serverInD.readUTF();
+                    DataInputStream serverInD = new DataInputStream(socketS.getInputStream());
 
-                textArea.append(message + "\n");
+                    String message = serverInD.readUTF();
 
-                socketS.close();
+                    textArea.append(message + "\n");
+
+                    socketS.close();
+                }
+            } catch (IOException e) {
+                port++;
+                System.out.println("nuevo port");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
     }
 }
 
@@ -109,6 +119,7 @@ class PanelServer extends JPanel{
         sendServer = new JButton("Enviar");
 
         add(sendServer, BorderLayout.SOUTH);
+
 
     }
 

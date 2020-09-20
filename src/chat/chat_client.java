@@ -6,6 +6,7 @@ package chat;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
@@ -22,7 +23,10 @@ public class chat_client {
     }
 }
 
-class Frames extends JFrame{
+class Frames extends JFrame implements Runnable{
+
+    private Thread clientThread;
+    private JTextArea textArea;
 
     public Frames(){
 
@@ -40,12 +44,51 @@ class Frames extends JFrame{
         // This method set the background color
         //getContentPane().setBackground(new Color(236,229,221));
 
+        textArea = new JTextArea(37,30);
+        textArea.setBackground(new Color(236,229,221));
+
+
+
         // Create and add a panel which contains button and labels
         PanelClient containerClient = new PanelClient();
+        containerClient.add(textArea);
         add(containerClient);
 
 
         setVisible(true);
+
+        clientThread = new Thread(this);
+        clientThread.start();
+    }
+
+    @Override
+    public void run() {
+        int port = 1024;
+        boolean portAlive = true;
+
+        while (portAlive) {
+            try {
+                ServerSocket server = new ServerSocket(port);
+                System.out.println(port);
+                portAlive = false;
+
+                while (true) {
+                    Socket socketS = server.accept();
+
+                    DataInputStream serverInD = new DataInputStream(socketS.getInputStream());
+
+                    String message = serverInD.readUTF();
+
+                    textArea.append(message + "\n");
+
+                    socketS.close();
+                }
+            } catch (IOException e) {
+                port++;
+                System.out.println("nuevo port");
+            }
+        }
+
     }
 }
 
@@ -57,8 +100,10 @@ class PanelClient extends JPanel{
     private JButton sendClient;
 
     private JTextField nameEntry;
+    private JTextField portEntry;
     private JLabel clientLabel;
-    private JTextArea textArea;
+    private JLabel portLabel;
+    //private JTextArea textArea;
 
     public PanelClient() {
 
@@ -66,15 +111,21 @@ class PanelClient extends JPanel{
         clientLabel = new JLabel("Ingrese su nombre:");
         clientLabel.setForeground(Color.white);
 
+        portLabel = new JLabel("Puerto: ");
+        portLabel.setForeground(Color.white);
+
         nameEntry = new JTextField(8);
+        portEntry = new JTextField(5);
 
         add(clientLabel);
         add(nameEntry);
+        add(portLabel);
+        add(portEntry);
 
-        textArea = new JTextArea(37,30);
-        textArea.setBackground(new Color(236,229,221));
+        //textArea = new JTextArea(37,30);
+        //textArea.setBackground(new Color(236,229,221));
 
-        add(textArea);
+        //add(textArea);
 
         // This method set the background color
         setBackground(new Color(18, 140, 128));
@@ -98,15 +149,15 @@ class PanelClient extends JPanel{
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            //System.out.println(entryTxtClient.getText());
-            int port = 6000;
+
+            int port = Integer.parseInt(portEntry.getText());
 
             try {
                 Socket clientSocket = new Socket("127.0.0.1", port);
 
                 DataOutputStream clientOutD = new DataOutputStream(clientSocket.getOutputStream());
 
-                clientOutD.writeUTF(entryTxtClient.getText() + "  N-  " + nameEntry.getText());
+                clientOutD.writeUTF(entryTxtClient.getText() + "  --  " + nameEntry.getText());
 
                 clientOutD.close();
 
@@ -114,8 +165,9 @@ class PanelClient extends JPanel{
                 ioException.printStackTrace();
                 System.out.println(ioException.getMessage());
             }
-
         }
+
     }
 
 }
+
