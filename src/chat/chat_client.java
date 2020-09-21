@@ -11,7 +11,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 
-
+/**
+ *
+ *
+ */
 public class chat_client {
 
     public static void main (String[] args) {
@@ -23,12 +26,19 @@ public class chat_client {
     }
 }
 
+/**
+ *
+ *
+ */
 class Frames extends JFrame implements Runnable{
 
     private Thread clientThread;
     private JTextArea textArea;
     private JLabel portLabel;
 
+    /**
+     *
+     */
     public Frames(){
 
         // Create variables for an easy change
@@ -64,6 +74,10 @@ class Frames extends JFrame implements Runnable{
         clientThread.start();
     }
 
+    /**
+     *
+     *
+     */
     @Override
     public void run() {
         int port = 1024;
@@ -98,6 +112,10 @@ class Frames extends JFrame implements Runnable{
 
 // This class creates the south panel which has a button and a textfield
 
+/**
+ *
+ *
+ */
 class PanelClient extends JPanel{
 
     private JTextField entryTxtClient;
@@ -108,6 +126,9 @@ class PanelClient extends JPanel{
     private JLabel portLabel;
     //private JTextArea textArea;
 
+    /**
+     *
+     */
     public PanelClient() {
 
         clientLabel = new JLabel("Ingrese su nombre:");
@@ -141,6 +162,10 @@ class PanelClient extends JPanel{
 
     }
 
+    /**
+     *
+     *
+     */
     private class sendTxt implements ActionListener{
 
         @Override
