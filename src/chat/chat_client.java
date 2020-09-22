@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.net.*;
 
 /**
- *
- *
+ * @author Ignacio Calderón
+ * @version 2.0
+ * This is the main class which contains the frame of the app
  */
+
 public class chat_client {
 
     public static void main (String[] args) {
@@ -27,9 +29,10 @@ public class chat_client {
 }
 
 /**
- *
- *
+ * @author Ignacio Calderón
+ * THis class creates the frame. Also contains a thread to listen incoming messages
  */
+
 class Frames extends JFrame implements Runnable{
 
     private Thread clientThread;
@@ -37,8 +40,10 @@ class Frames extends JFrame implements Runnable{
     private JLabel portLabel;
 
     /**
-     *
+     * @author Ignacio Calderón
+     * This method sets the GUI
      */
+
     public Frames(){
 
         // Create variables for an easy change
@@ -48,12 +53,12 @@ class Frames extends JFrame implements Runnable{
         // This method set the size of the frame
         setSize(Fwidth, Fheight);
         setLocation(305, 190);
+
         // This method don't allow to change frame dimensions
         setResizable(false);
+
         // This method shows the frame
         setTitle("Cliente");
-        // This method set the background color
-        //getContentPane().setBackground(new Color(236,229,221));
 
         textArea = new JTextArea(36,30);
         textArea.setBackground(new Color(236,229,221));
@@ -70,16 +75,22 @@ class Frames extends JFrame implements Runnable{
 
         setVisible(true);
 
+        // Create a thread and starts it
+
         clientThread = new Thread(this);
         clientThread.start();
     }
 
     /**
-     *
-     *
+     * @author Ignacio Calderón
+     * @throws IOException
+     * This method creates a ServerSocket who is listening for incoming data, if the socket is not avalible
+     * it tries the next one.
      */
+
     @Override
     public void run() {
+
         int port = 1024;
         boolean portAlive = true;
 
@@ -110,12 +121,12 @@ class Frames extends JFrame implements Runnable{
     }
 }
 
-// This class creates the south panel which has a button and a textfield
 
 /**
- *
- *
+ * @author Ignacio Calderón
+ * This class is in charge of the GUI and "saving" the message, port and name of the user.
  */
+
 class PanelClient extends JPanel{
 
     private JTextField entryTxtClient;
@@ -124,11 +135,12 @@ class PanelClient extends JPanel{
     private JTextField portEntry;
     private JLabel clientLabel;
     private JLabel portLabel;
-    //private JTextArea textArea;
 
     /**
-     *
+     * @author Ignacio Calderón
+     * This method contains the objects of the GUI and it serves as entry for the text.
      */
+
     public PanelClient() {
 
         clientLabel = new JLabel("Ingrese su nombre:");
@@ -163,9 +175,11 @@ class PanelClient extends JPanel{
     }
 
     /**
-     *
-     *
+     * @author Ignacio Calderón
+     * @throws IOException
+     * This method writes text in a DataOutpútStream object and link this object to a socket whith it's own ip and port
      */
+
     private class sendTxt implements ActionListener{
 
         @Override
