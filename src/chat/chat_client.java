@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.net.*;
 
 /**
+ * This is the main class which contains the frame of the app
  * @author Ignacio Calderón
  * @version 2.0
- * This is the main class which contains the frame of the app
  */
 
 public class chat_client {
@@ -29,8 +29,8 @@ public class chat_client {
 }
 
 /**
+ * This class creates the frame. Also contains a thread to listen incoming messages
  * @author Ignacio Calderón
- * THis class creates the frame. Also contains a thread to listen incoming messages
  */
 
 class Frames extends JFrame implements Runnable{
@@ -40,8 +40,8 @@ class Frames extends JFrame implements Runnable{
     private JLabel portLabel;
 
     /**
-     * @author Ignacio Calderón
      * This method sets the GUI
+     * @author Ignacio Calderón
      */
 
     public Frames(){
@@ -82,10 +82,10 @@ class Frames extends JFrame implements Runnable{
     }
 
     /**
-     * @author Ignacio Calderón
-     * @throws IOException
      * This method creates a ServerSocket who is listening for incoming data, if the socket is not avalible
      * it tries the next one.
+     * @author Ignacio Calderón
+     * @throws IOException
      */
 
     @Override
@@ -114,7 +114,6 @@ class Frames extends JFrame implements Runnable{
                 }
             } catch (IOException e) {
                 port++;
-                System.out.println("nuevo port");
             }
         }
 
@@ -123,8 +122,8 @@ class Frames extends JFrame implements Runnable{
 
 
 /**
- * @author Ignacio Calderón
  * This class is in charge of the GUI and "saving" the message, port and name of the user.
+ * @author Ignacio Calderón
  */
 
 class PanelClient extends JPanel{
@@ -137,8 +136,8 @@ class PanelClient extends JPanel{
     private JLabel portLabel;
 
     /**
-     * @author Ignacio Calderón
      * This method contains the objects of the GUI and it serves as entry for the text.
+     * @author Ignacio Calderón
      */
 
     public PanelClient() {
@@ -175,9 +174,9 @@ class PanelClient extends JPanel{
     }
 
     /**
+     * This method writes text in a DataOutputStream object and link this object to a socket with it's own ip and port
      * @author Ignacio Calderón
-     * @throws IOException
-     * This method writes text in a DataOutpútStream object and link this object to a socket whith it's own ip and port
+     * @throws  IOException
      */
 
     private class sendTxt implements ActionListener{
