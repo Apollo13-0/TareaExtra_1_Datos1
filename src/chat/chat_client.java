@@ -3,6 +3,11 @@ package chat;
 
  // import modules for GUI
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import test.StringToInt;
+import test.casc;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,12 +23,14 @@ import java.net.*;
  */
 
 public class chat_client {
+    public final static Logger logging = Logger.getLogger(casc.class);
 
     public static void main (String[] args) {
+        PropertyConfigurator.configure(System.getProperty("user.dir") + "\\log.properties");
 
-    Frames clientFrame = new Frames();
-    //This method stops the app
-    clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Frames clientFrame = new Frames();
+        //This method stops the app
+        clientFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 }
@@ -32,12 +39,11 @@ public class chat_client {
  * This class creates the frame. Also contains a thread to listen incoming messages
  * @author Ignacio Calderón
  */
-
 class Frames extends JFrame implements Runnable{
 
-    private Thread clientThread;
     private JTextArea textArea;
     private JLabel portLabel;
+    private Thread clientThread;
 
     /**
      * This method sets the GUI
@@ -114,6 +120,7 @@ class Frames extends JFrame implements Runnable{
                 }
             } catch (IOException e) {
                 port++;
+                chat_client.logging.error(e.getMessage());
             }
         }
 
@@ -179,30 +186,39 @@ class PanelClient extends JPanel{
      * @throws  IOException
      */
 
-    private class sendTxt implements ActionListener{
+    private class sendTxt implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
 
 
-            int port = Integer.parseInt(portEntry.getText());
-
+            int port=0;
             try {
-                Socket clientSocket = new Socket("127.0.0.1", port);
+                port = StringToInt.checkerPort(portEntry.getText());
+            } catch (StringToInt stringToInt) {
+                chat_client.logging.error(stringToInt.getMessage());
+            }
 
-                DataOutputStream clientOutD = new DataOutputStream(clientSocket.getOutputStream());
 
-                clientOutD.writeUTF(entryTxtClient.getText() + "  --  " + nameEntry.getText());
+            if (port>0) {
+                try {
+                    Socket clientSocket = new Socket("127.0.0.1", port);
 
-                clientOutD.close();
+                    DataOutputStream clientOutD = new DataOutputStream(clientSocket.getOutputStream());
 
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-                System.out.println(ioException.getMessage());
+                    clientOutD.writeUTF(entryTxtClient.getText() + "  --  " + nameEntry.getText());
+
+                    clientOutD.close();
+
+                } catch (IOException ioException) {
+                    chat_client.logging.error(ioException.getMessage());
+                }
             }
         }
 
     }
+
+
 
 }
 
